@@ -1,4 +1,3 @@
-/data
 /inputfile
 /bin
 /obj
@@ -6,11 +5,12 @@
 /py_test
 /trash
 /src/tests
-/src/main
-*.o
 !data/init_conf/R1_init.csv
 !data/init_conf/R1vortex_init.csv
 !data/init_conf/R2_init.csv
-
+/data
 !/inputfile/example_inputfile.dat
 !/src/main/main_sim.cpp
+
+/src/main
+*.o
