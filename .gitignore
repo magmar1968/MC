@@ -1,16 +1,18 @@
-/inputfile
+
 /bin
 /obj
 /plots
 /py_test
 /trash
 /src/tests
-!data/init_conf/R1_init.csv
-!data/init_conf/R1vortex_init.csv
-!data/init_conf/R2_init.csv
-/data
-!/inputfile/example_inputfile.dat
+
+/data/**
+!data/init_conf
+
+/src/main/**
 !/src/main/main_sim.cpp
 
-/src/main
+/inputfile/**
+!/inputfile/example_inputfile.dat
+
 *.o

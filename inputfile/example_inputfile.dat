@@ -1,0 +1,63 @@
+!FLAGS:
+#DMC                     false  !Set true if Diffusional MC
+#VMC                     true   !Set true if Variatonal MC
+#PureGas                 false   !Set true if is a pure gas system
+#GasMixture              true  !Set true if is a mix gas system
+#AddVortex               false  !Set true if there's also a vortex in gas1
+#PrintEnergyEvolution    true   !Set true if you wanna print the Energy Evolution
+#PrintDensityProfile     true   !Set true if you wanna print the Density Profile
+#PrintFinalConfiguration true   !Set true if you wanna print the final Configuration
+#PrintTrialWaveFunction  true   !Set true if you wanna print the TWF of the system
+#PrintSimulationOptions  true  !Set true if you wanna print at screen the Simulation Options
+#ReadInitConfFromFile    true   !Set true if the starting configuration must be read from file
+
+
+
+!Filenames
+InitialConfFilename_1    ./data/init_conf/R1_init.csv
+InitialConfFilename_2    ./data/init_conf/R2_init.csv
+PrintInitConfFilename    ./data/init_conf.csv
+PrintDensProfFilename    ./data/DensProfile.csv
+PrintEnEvolFilename      ./data/EnEvolution.csv
+PrintFinalConfFilename   ./data/final_conf.csv
+
+!MC Parameters
+NMCsteps                 3000
+NThermSteps              1000
+NStabSteps               0
+dt                       0.02
+
+!DMC Parameters
+N0walkers                100
+
+!Dens Profile Parameters
+NDensProfileSteps        5
+DensProfileStepSize      7.0
+
+
+!vortex Parameters
+a_vortex                 1
+
+!Gas 1 Parameters
+NatomsGas1               50
+RvGas1                   25.555555555555557
+RcoreGas1                1
+k0Gas1                   0.016670324271999604
+alphaGas1                36.20000000000002
+DGas1                    1
+HarmonicLenghtGas1       50
+
+!Gas2 Parameters
+NatomsGas2               50
+RvGas2                   25.555555555555557
+RcoreGas2                1
+k0Gas2                   0.016670324271999604
+alphaGas2                36.20000000000002
+DGas2                    1
+HarmonicLenghtGas2       50
+
+!Gas12 Parameters
+RvGas12                  25.555555555555557
+RcoreGas12               1
+k0Gas12                  0.016670324271999604
+alphaGas12               36.2000000000000
