@@ -13,3 +13,4 @@
 !data/init_conf/R2_init.csv
 
 !/inputfile/example_inputfile.dat
+!/src/main/main_sim.cpp
