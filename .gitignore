@@ -1,0 +1,13 @@
+/data
+/inputfile
+/bin
+/obj
+/plots
+/py_test
+/trash
+*.o
+!/data/init_conf/R1_init.csv
+!/data/init_conf/R1vortex_init.csv
+!/R2_init.csv
+
+!/inputfile/example_inputfile.dat
