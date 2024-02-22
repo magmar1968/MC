@@ -5,6 +5,8 @@
 /plots
 /py_test
 /trash
+/src/tests
+/src/main
 *.o
 !data/init_conf/R1_init.csv
 !data/init_conf/R1vortex_init.csv
