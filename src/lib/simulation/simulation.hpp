@@ -8,6 +8,7 @@
 #include "../MC/DMC/DMC.hpp"
 
 #include "../utility/2D_vector.hpp"
+#include "../utility/directory/directory.hpp"
 
 #include "../density_profile/density_profile.hpp"
 
