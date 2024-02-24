@@ -70,8 +70,12 @@ private:
     //system
     System *       _System;
     
-//pointers
+    //pointers
     MC * _MC;
+
+    //output 
+    std::string _resultsPath;
+
 
 };
 

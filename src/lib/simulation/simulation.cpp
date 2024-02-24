@@ -17,31 +17,28 @@ Simulation::~Simulation()
 }
 
 
-
-
-
 MC_output Simulation::Run()
 {
     std::string filename;
     if(is_flag_on(_McOpt,McOptions::PrintInitConfiguration)){
         filename = _McParam["PrintInitConfFilename"];
-        _MC->print_inital_configuration(filename);
+        _MC->print_inital_configuration(_resultsPath + filename);
     }
     _MC->run();
 
     if(is_flag_on(_McOpt,McOptions::PrintDensityProfile)){
         filename = _McParam["PrintDensProfFilename"];
-        _MC -> print_density_profile(filename);
+        _MC -> print_density_profile(_resultsPath + filename);
     }
     
     if(is_flag_on(_McOpt,McOptions::PrintEnergyEvolution)){
         filename = _McParam["PrintEnEvolFilename"];
-        _MC -> print_energy_evolution(filename);
+        _MC -> print_energy_evolution(_resultsPath + filename);
     }
 
     if(is_flag_on(_McOpt,McOptions::PrintFinalConfiguration)){
         filename = _McParam["PrintFinalConfFilename"];
-        _MC -> print_final_configuration(filename);
+        _MC -> print_final_configuration(_resultsPath + filename);
     }
     return _MC->get_results();
 }
@@ -183,7 +180,18 @@ void Simulation::SetupSimulation()
     if(is_flag_on(_McOpt,McOptions::VMC)){
         SetupVMC();
     }else{
-    SetupDMC();
+        SetupDMC();
+    }
+
+    if(isDirExist(_McParam["resultsPath"])){
+        _resultsPath = _McParam["resultsPath"];
+    }else{
+        if(makePath(_McParam["resultsPath"])){
+            _resultsPath = _McParam["resultsPath"];
+        }else{
+            std::cerr << "ERROR: in SetupSimulation:                     \n"
+                      << "        impossible to create results directory \n";  
+        }
     }
 }
 
