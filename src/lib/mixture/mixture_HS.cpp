@@ -215,15 +215,6 @@ Mixture_HS::force_vec_type Mixture_HS::F2(cpos_vec_type& R1, cpos_vec_type& R2) 
     return Force;
 }
 
-Mixture_HS::force_vec_type Mixture_HS::F(cpos_vec_type& R1, cpos_vec_type& R2) const
-{
-    std::vector<vector_2D> Force(R1.size() + R2.size());
-
-    vector_2D r_hat;
-    double r, twiceup;
-    //Gas1
-    
-}
 
 //###############################################
 //#               Diffuse Gasses                #

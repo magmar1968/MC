@@ -45,8 +45,6 @@ public:
     //force
     force_vec_type F1(cpos_vec_type&,cpos_vec_type&) const;
     force_vec_type F2(cpos_vec_type&,cpos_vec_type&) const;
-    force_vec_type F(cpos_vec_type&,cpos_vec_type&) const;
-
 
     //diffuse 
     pos_vec_type diffuse_gas1(cpos_vec_type&,double);
