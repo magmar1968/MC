@@ -20,7 +20,9 @@ bool read_file( const std::string& filename,
     {
         std::getline(ifs,*line);
 
-        boost::trim(*line); //remove initial and final white spaces
+        ltrim(*line);
+        rtrim(*line);
+        
 
         if(line->size() == 0)
             continue;
