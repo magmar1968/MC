@@ -16,3 +16,5 @@
 !/inputfile/example_inputfile.dat
 
 *.o
+
+/.vscode
