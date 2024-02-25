@@ -9,6 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <type_traits>  //is_same()
 
 // trim from start (in place)
 inline void ltrim(std::string &s) {
@@ -25,9 +26,6 @@ inline void rtrim(std::string &s) {
 }
 
 
-
-
-
 inline bool file_exist(const std::string& filename)
 {
     std::ifstream f(filename.c_str());
@@ -37,6 +35,33 @@ inline bool file_exist(const std::string& filename)
 bool read_file(const std::string&,  
                std::map<std::string,std::string> &,
                McOptions &);
+
+inline bool keyExists(std::map<std::string,std::string>& map, std::string& key)
+{
+    return !(map.find(key) == map.end());
+}
+
+
+double checkAndGetd(std::map<std::string,std::string>&,  std::string&);
+inline double checkAndGetd(std::map<std::string,std::string>& map,  const char * key)
+{
+    std::string key_s(key); 
+    return checkAndGetd(map,key_s);
+}
+int    checkAndGeti(std::map<std::string,std::string>&,  std::string&);
+inline int checkAndGeti(std::map<std::string,std::string>& map,  const char * key)
+{
+    std::string key_s(key); 
+    return checkAndGeti(map,key_s);
+}
+
+std::string checkAndGets(std::map<std::string,std::string>&,  std::string&);
+inline std::string checkAndGets(std::map<std::string,std::string>& map,  const char * key)
+{
+    std::string key_s(key); 
+    return checkAndGets(map,key_s);
+}
+
 
 void read_option( std::string&, std::string &, McOptions &);
 void print_sim_parameters(std::map<std::string,std::string>&,

@@ -58,6 +58,39 @@ bool read_file( const std::string& filename,
 }
 
 
+double checkAndGetd( std::map<std::string,std::string>& map, std::string& keyname)
+{
+    if(keyExists(map,keyname)){
+        return stod(map[keyname]);
+    }else{
+        std::cerr << "Error: in checkAndGetd:                  \n "
+                  << "      key " << keyname << "doesn't exist \n";
+        return 0.;
+    }
+}
+
+int checkAndGeti(std::map<std::string,std::string>& map, std::string& keyname)
+{
+    if(keyExists(map,keyname)){
+        return stoi(map[keyname]);
+    }else{
+        std::cerr << "Error: in checkAndGeti:                  \n "
+                  << "      key " << keyname << "doesn't exist \n";
+        return 0;
+    }
+}
+
+std::string checkAndGets(std::map<std::string,std::string>& map, std::string& keyname)
+{
+    if(keyExists(map,keyname)){
+        return map[keyname];
+    }else{
+        std::cerr << "Error: " << __func__  << std::endl 
+                  << "      key " << keyname << "doesn't exist \n";
+        return std::string();
+    }
+}
+
 void read_option(std::string& parameter_name, std::string& parameter_value, McOptions& MC_options)
 {
     if(parameter_value == "false")
