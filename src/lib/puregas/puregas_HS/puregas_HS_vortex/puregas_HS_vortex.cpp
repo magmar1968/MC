@@ -20,7 +20,10 @@ double PureGas_HS_Vortex::trial_WF(cpos_vec_type& R) const
 {
 #ifdef DEBUG
     assert(R.size() == _Natoms);
-#endif    
+#endif   
+    if(_SetToOne)
+        return PureGas_HS::trial_WF(R);
+
     double r;
     double u = 0;
 
@@ -56,6 +59,8 @@ double PureGas_HS_Vortex::Epot(cpos_vec_type& R) const
 #ifdef DEBUG
     assert(R.size() == _Natoms);
 #endif
+    if(_SetToOne)
+        return PureGas_HS::Epot(R);
 
 
     double epot =0.;
@@ -98,6 +103,8 @@ double PureGas_HS_Vortex::EkinPartial(cpos_vec_type& R) const
 #ifdef DEBUG
     assert(R.size() == _Natoms);
 #endif  
+    if(_SetToOne)
+        return PureGas_HS::EkinPartial(R);
     
     double ekinpartial = 0.;
     double r = 0.;
@@ -149,6 +156,10 @@ PureGas::force_vec_type PureGas_HS_Vortex::F(cpos_vec_type& R) const
 #ifdef DEBUG
     assert(R.size() == _Natoms);
 #endif
+    if(_SetToOne)
+        return PureGas_HS::F(R);
+
+
     std::vector<vector_2D> Force(R.size());
     vector_2D r_hat;
     double r, up;

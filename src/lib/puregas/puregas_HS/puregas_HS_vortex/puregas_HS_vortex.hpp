@@ -24,6 +24,9 @@ public:
     //Force
     force_vec_type F(cpos_vec_type&) const override;
 
+    //setter
+    void inline SetToOne(){_SetToOne = true;}
+
 private:
     double vortex_sol(double)        const;
 
@@ -31,6 +34,8 @@ private:
     double _a_vortex;  //vortex size
     double _1overa;    // 1/a_vortex
     double _l = 1;     //angular momentum eigenstate
+
+    bool   _SetToOne = false;
 
 };
     
