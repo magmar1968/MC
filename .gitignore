@@ -5,6 +5,7 @@
 /py_test
 /trash
 /src/tests
+/results
 
 /data/**
 !data/init_conf

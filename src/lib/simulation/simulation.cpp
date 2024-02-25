@@ -191,7 +191,7 @@ void Simulation::SetupSimulation()
         SetupDMC();
     }
 
-    if(isDirExist(_McParam["resultsPath"])){
+    if(isDirExist(checkAndGets(_McParam,"resultsPath"))){
         _resultsPath = _McParam["resultsPath"];
     }else{     
         if(makePath(_McParam["resultsPath"])){
