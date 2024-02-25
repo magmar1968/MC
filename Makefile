@@ -33,8 +33,8 @@ FILTER_OBJ  := $(call FILTER_OUT,main,$(FILTER_OBJ))
 #exam 
 .PHONY: main
 main: resources
-main: LDFLAGS += -O2
-main: CCFLAGS += -O2
+main: LDFLAGS += -O3
+main: CCFLAGS += -O3
 main: $(TARGET)
 
 .PHONY: test
@@ -73,7 +73,9 @@ clean:
 #Full Clean, Objects and Binaries
 .PHONY: cleaner
 cleaner: clean
+	@$(RM) -r results
 	@$(RM) -r $(TARGETDIR)
+
 
 #Pull in dependency info for *existing* .o files
 -include $(OBJECTS:.$(OBJEXT)=.$(DEPEXT))
