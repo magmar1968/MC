@@ -13,9 +13,9 @@ namespace mcs{
 
 struct MC_input
 {
-    int    N_MCsteps;
-    int    N_thermsteps;
-    int    N_stabsteps;
+    uint    N_MCsteps;
+    uint    N_thermsteps;
+    uint    N_stabsteps;
     double dt;
 };
 
