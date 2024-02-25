@@ -10,7 +10,7 @@ class PureGas_HS_Vortex : public PureGas_HS
 {
 public:
     PureGas_HS_Vortex(){};
-    PureGas_HS_Vortex(gas_parameters&, double);
+    PureGas_HS_Vortex(gas_parameters&, double,bool SetToOne = false);
 
     double trial_WF(cpos_vec_type&) const override;
 

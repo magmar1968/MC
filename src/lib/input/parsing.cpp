@@ -93,6 +93,7 @@ void read_option(std::string& parameter_name, std::string& parameter_value, McOp
     if(parameter_name == "#PureGas")            MC_options = MC_options | McOptions::PureGas;
     if(parameter_name == "#GasMixture")         MC_options = MC_options | McOptions::GasMixture;
     if(parameter_name == "#AddVortex")          MC_options = MC_options | McOptions::AddVortex;
+    if(parameter_name == "#SetVortTWFtoOne"   ) MC_options = MC_options | McOptions::SetVortTWFtoOne;
     if(parameter_name == "#ReadInitConfFromFile") MC_options = MC_options | McOptions::ReadInitConfFromFile;
     if(parameter_name == "#PrintEnergyEvolution") MC_options = MC_options | McOptions::PrintEnergyEvolution;
     if(parameter_name == "#PrintDensityProfile")  MC_options = MC_options | McOptions::PrintDensityProfile;

@@ -64,7 +64,10 @@ void Simulation::SetupGas1()
     double a_vortex;
     if(is_flag_on(_McOpt,McOptions::AddVortex)){
         a_vortex = checkAndGetd(_McParam,"a_vortex");
-        _Gas1 = new PureGas_HS_Vortex(GasParam,a_vortex);
+        if(is_flag_on(_McOpt, McOptions::SetVortTWFtoOne))
+            _Gas1 = new PureGas_HS_Vortex(GasParam,a_vortex,true);
+        else    
+            _Gas1 = new PureGas_HS_Vortex(GasParam,a_vortex);
     }else{
         _Gas1 = new PureGas_HS(GasParam);
     }

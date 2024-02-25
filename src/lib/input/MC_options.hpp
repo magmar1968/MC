@@ -4,19 +4,20 @@
 
 enum class McOptions
 {
-    DMC                     = 1ul << 0, // Diffusion MC option on
-    VMC                     = 1ul << 1, // Variational MC option on
-    PureGas                 = 1ul << 2, // Simulate the behaviour of a pure gas
-    GasMixture              = 1ul << 3, // Simulate the behaviour of a gas mixture
-    AddVortex               = 1ul << 4, // Add a vortex to the first gas 
-    PrintEnergyEvolution    = 1ul << 5, // Print the energy evolution of the process
-    PrintDensityProfile     = 1ul << 6, // Print the density profile of the system 
-    PrintInitConfiguration  = 1ul << 7, // Print the initial configuration
-    PrintFinalConfiguration = 1ul << 8, // Print the system final configuration
-    PrintTrialWaveFunction  = 1ul << 9, // Print the shape of the TWF
-    PrintSimulationOptions  = 1ul << 10, // Print to screen the simulation parameters
-    ReadInitConfFromFile    = 1ul << 11, // Read Initial Gas Configuration From File
-    Initial                 = 1ul << 12 
+    DMC                     = 1ul << 0,  // Diffusion MC option on
+    VMC                     = 1ul << 1,  // Variational MC option on
+    PureGas                 = 1ul << 2,  // Simulate the behaviour of a pure gas
+    GasMixture              = 1ul << 3,  // Simulate the behaviour of a gas mixture
+    AddVortex               = 1ul << 4,  // Add a vortex to the first gas 
+    SetVortTWFtoOne         = 1ul << 5,  // Set  vortex TWF to one
+    PrintEnergyEvolution    = 1ul << 6,  // Print the energy evolution of the process
+    PrintDensityProfile     = 1ul << 7,  // Print the density profile of the system 
+    PrintInitConfiguration  = 1ul << 8,  // Print the initial configuration
+    PrintFinalConfiguration = 1ul << 9,  // Print the system final configuration
+    PrintTrialWaveFunction  = 1ul << 10, // Print the shape of the TWF
+    PrintSimulationOptions  = 1ul << 11, // Print to screen the simulation parameters
+    ReadInitConfFromFile    = 1ul << 12, // Read Initial Gas Configuration From File
+    Initial                 = 1ul << 13
 };
 
 

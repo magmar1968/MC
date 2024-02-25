@@ -3,8 +3,8 @@
 namespace mcs
 {
     
-PureGas_HS_Vortex::PureGas_HS_Vortex(gas_parameters& param, double a_vortex)
-    :PureGas_HS(param),_a_vortex(a_vortex)
+PureGas_HS_Vortex::PureGas_HS_Vortex(gas_parameters& param, double a_vortex, bool SetToOne)
+    :PureGas_HS(param),_a_vortex(a_vortex),_SetToOne(SetToOne)
 {
     _1overa = 1./_a_vortex;
 }
