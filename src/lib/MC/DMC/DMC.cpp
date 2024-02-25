@@ -127,7 +127,6 @@ void DMC::run()
                       << "E      : " << _Eavg <<   "  +- " << _Error  << std::endl
                       << "pop    : " << _NWalkers << std::endl
                       << "in     : " << time.Mins << ":" << time.Secs << std::endl;
-
         }
     }//MC steps
 
@@ -146,7 +145,7 @@ void DMC::print_density_profile(const std::string& filename)
     if(_Had_run == false)
     {
         std::cerr << "ERROR: impossible to print the density profile \n"
-                  << "       before of running the simulation        \n";
+                  << "       before running the simulation           \n";
         return;
     }
 
@@ -160,7 +159,7 @@ void DMC::print_energy_evolution(const std::string& filename)
     if(_Had_run == false)
     {
         std::cerr << "ERROR: impossible to print the energy evolution\n"
-                  << "       before of running the simulation        \n";
+                  << "       before running the simulation           \n";
         return;
     }
     std::fstream  ofs(filename,std::fstream::out);
