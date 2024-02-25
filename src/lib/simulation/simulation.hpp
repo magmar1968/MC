@@ -25,6 +25,8 @@
 #include <map> //map
 #include <string> //string
 
+#include <stdexcept>
+
 
 
 namespace mcs

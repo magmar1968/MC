@@ -7,6 +7,7 @@
 #include <vector> //vector
 #include <string> //string
 #include <fstream>
+#include <stdexcept>
 
 const std::string DEFAULT_FILENAME = "./data/R.csv";
 

@@ -6,9 +6,7 @@ bool read_file( const std::string& filename,
                 McOptions & MC_options)
 {
     if(file_exist(filename) == false){
-        std::cerr << "INPUT ERROR: the input file doesn't exist. Please check the\n"
-                      << "              filname and retry.                       \n";
-        return false;
+        throw std::invalid_argument("ERROR: " + filename + " doesn't exist. Please chek and retry");
     }
 
     std::ifstream ifs(filename,std::fstream::in);
@@ -63,9 +61,7 @@ double checkAndGetd( std::map<std::string,std::string>& map, std::string& keynam
     if(keyExists(map,keyname)){
         return stod(map[keyname]);
     }else{
-        std::cerr << "Error: in checkAndGetd:                  \n "
-                  << "      key " << keyname << "doesn't exist \n";
-        return 0.;
+        throw std::invalid_argument("ERROR: " + keyname + " haven't been found in inputfile");
     }
 }
 
@@ -74,9 +70,7 @@ int checkAndGeti(std::map<std::string,std::string>& map, std::string& keyname)
     if(keyExists(map,keyname)){
         return stoi(map[keyname]);
     }else{
-        std::cerr << "Error: in checkAndGeti:                  \n "
-                  << "      key " << keyname << "doesn't exist \n";
-        return 0;
+        throw std::invalid_argument("ERROR: " + keyname + " haven't been found in inputfile");
     }
 }
 
@@ -85,9 +79,7 @@ std::string checkAndGets(std::map<std::string,std::string>& map, std::string& ke
     if(keyExists(map,keyname)){
         return map[keyname];
     }else{
-        std::cerr << "Error: " << __func__  << std::endl 
-                  << "      key " << keyname << "doesn't exist \n";
-        return std::string();
+        throw std::invalid_argument("ERROR: " + keyname + " haven't been found in inputfile");
     }
 }
 

@@ -9,7 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include <type_traits>  //is_same()
+#include <stdexcept>
 
 // trim from start (in place)
 inline void ltrim(std::string &s) {

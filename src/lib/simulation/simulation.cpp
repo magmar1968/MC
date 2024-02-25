@@ -193,12 +193,11 @@ void Simulation::SetupSimulation()
 
     if(isDirExist(_McParam["resultsPath"])){
         _resultsPath = _McParam["resultsPath"];
-    }else{
+    }else{     
         if(makePath(_McParam["resultsPath"])){
             _resultsPath = _McParam["resultsPath"];
         }else{
-            std::cerr << "ERROR: in SetupSimulation:                     \n"
-                      << "        impossible to create results directory \n";  
+            throw std::invalid_argument("Impossible to create a Results Directory");   
         }
     }
 }

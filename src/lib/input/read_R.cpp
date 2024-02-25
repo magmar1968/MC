@@ -5,9 +5,7 @@ std::vector<vector_2D> read_R(const std::string& filename)
 {
     std::vector<vector_2D> R_OUT;
     if(!file_exist(filename)){
-        std::cerr << "ERROR: in _func_   :               \n"
-                  << "       the file does't exist       \n";
-        return R_OUT;
+        throw std::invalid_argument("ERROR: "+ filename + " doesn't exist. Please check and retry");
     }
 
     std::fstream ifs(filename,std::fstream::in);
