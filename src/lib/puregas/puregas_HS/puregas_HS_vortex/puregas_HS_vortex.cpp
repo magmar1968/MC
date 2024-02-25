@@ -59,9 +59,6 @@ double PureGas_HS_Vortex::Epot(cpos_vec_type& R) const
 #ifdef DEBUG
     assert(R.size() == _Natoms);
 #endif
-    if(_SetToOne)
-        return PureGas_HS::Epot(R);
-
 
     double epot =0.;
     double r;
