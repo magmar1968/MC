@@ -17,8 +17,8 @@ HEADEXT     := hpp
 DEPEXT      := d
 OBJEXT      := o
 #Flags, Libraries and Includes
-LDFLAGS  = -std=c++11 -lboost_system 
-CCFLAGS := -std=c++11 -lboost_system 
+LDFLAGS  = -std=c++11  
+CCFLAGS := -std=c++11  
 INC         := -I$(INCDIR) -I/usr/local/include
 INCDEP      := -I$(INCDIR)
 
