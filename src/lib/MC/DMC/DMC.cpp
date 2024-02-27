@@ -123,7 +123,7 @@ void DMC::run()
             
             //print stuff
             Time time = timer.Get_Time();
-            std::cout << "MC step: " << MC_step  << " / " << _N_MCsteps  << std::endl
+            std::cout << "MC step: " << MC_step  << " / "  << _N_MCsteps  << std::endl
                       << "E      : " << _Eavg <<   "  +- " << _Error  << std::endl
                       << "pop    : " << _NWalkers << std::endl
                       << "in     : " << time.Mins << ":" << time.Secs << std::endl;

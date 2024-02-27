@@ -123,7 +123,7 @@ void print_sim_parameters( std::map<std::string,std::string>& MC_parameters,
     std::cout << "   - dt                    : " << MC_parameters["dt"] << std::endl;
     
     if( is_flag_on(MC_options, McOptions::DMC) ){
-    std::cout << "   - Number Initial walkers: " << MC_parameters["N0walkers"];    
+    std::cout << "   - Number Initial walkers: " << MC_parameters["N0walkers"] << std::endl;    
     }
 
     std::cout << " Gas 1:                      "  << std::endl;
@@ -157,6 +157,7 @@ void print_sim_parameters( std::map<std::string,std::string>& MC_parameters,
     }// Only for Gas Mixture
 
     std::cout << "Output Files Filenames:       " << std::endl;
+    std::cout << " - Results Path             : " << MC_parameters["resultsPath"] << std::endl;
     std::cout << "  - InitialConfFilename_1   : " << MC_parameters["InitialConfFilename_1"] << std::endl;
     if(is_flag_on(MC_options,McOptions::GasMixture)){
         std::cout << "  - InitialConfFilename_2   : " << MC_parameters["InitialConfFilename_2"] << std::endl;
