@@ -23,7 +23,7 @@ bool makePath(const std::string& path)
     case ENOENT:
         // parent didn't exist, try to create it
         {
-            int pos = path.find_last_of('/');
+            size_t pos = path.find_last_of('/');
             if (pos == std::string::npos)
                 return false;
             if (!makePath( path.substr(0, pos) ))
@@ -37,4 +37,30 @@ bool makePath(const std::string& path)
     default:
         return false;
     }
+}
+
+
+std::string getRawName(const std::string& path )
+{
+    size_t last_index = path.find_last_of(".");
+
+    if(last_index == std::string::npos){
+        std::cerr << "ERROR: in " << __PRETTY_FUNCTION__ << std::endl
+                 <<  "       seems like the input path doesn't lead to a valid file\n";
+        return std::string();
+    }
+    else
+        return path.substr(0,last_index);
+}
+
+std::string getExtension(const std::string& path)
+{
+    size_t last_index = path.find_last_of(".");
+    if(last_index == std::string::npos){
+        std::cerr << "ERROR: in " << __PRETTY_FUNCTION__ << std::endl
+                 <<  "       seems like the input path doesn't lead to a valid file\n";
+        return std::string();
+    }
+    else
+        return path.substr(last_index,path.size());
 }

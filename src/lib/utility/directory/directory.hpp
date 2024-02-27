@@ -10,4 +10,9 @@
 
 bool isDirExist(const std::string& path);
 bool makePath(const std::string& path);
-#endif
+
+std::string getRawName(const std::string& path);
+std::string getExtension(const std::string & path);
+
+
+#endif 
