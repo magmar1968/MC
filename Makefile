@@ -30,12 +30,18 @@ FILTER_OBJ  := $(call FILTER_OUT,test, $(OBJECTS))
 FILTER_OBJ  := $(call FILTER_OUT,main,$(FILTER_OBJ))
 
 
-#exam 
+#main
 .PHONY: main
 main: resources
 main: LDFLAGS += -O3
 main: CCFLAGS += -O3
 main: $(TARGET)
+
+.PHONY: fast
+fast: LDFLAGS += -DfastExp
+fast: CCFLAGS += -DfastExp
+fast: main
+
 
 .PHONY: test
 test: LDFLAGS += -g -W -Wall -ggdb3 -DDEBUG

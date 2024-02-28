@@ -14,9 +14,9 @@ PureGas_HS::PureGas_HS(gas_parameters& param)
 {
     _k0    = param.k0;
     _alpha = param.alpha;
+    _1overalpha = 1./_alpha;
     _Rv    = param.Rv;
     _Rcore = param.Rcore;
-    _1over_h_len = 1./_h_len;
     _C     = - j0(_k0*_Rcore)/y0(_k0*_Rcore);
     _Gamma = - (_alpha*_k0)/ exp( -_Rv/_alpha) * 
                 ( j1(_k0*_Rv) + _C * y1(_k0*_Rv) );
@@ -336,7 +336,11 @@ void PureGas_HS::print_conf_tofile(const std::string& filename,
 double PureGas_HS::twobody_scatt_sol(double r) const
 {
     if(r > _Rv)
-        return 1 - _Gamma*exp( -r/ _alpha);
+#ifndef fastExp
+        return 1 - _Gamma*exp( -r* _1overalpha);
+#else 
+        return 1 - _Gamma*fastExp( -r* _1overalpha);
+#endif
     else if (r <= _Rv and r > _Rcore)
         return j0(_k0*r) + _C * y0(_k0*r);
     else{
@@ -348,7 +352,11 @@ double PureGas_HS::twobody_scatt_sol(double r) const
 double PureGas_HS::twobody_scatt_sol_prime(double r) const
 {
    if(r > _Rv)
-        return _Gamma*exp( -r/ _alpha)/_alpha;
+#ifndef fastExp
+        return _Gamma*exp( -r*_1overalpha)*_1overalpha;
+#else
+        return _Gamma*fastExp( -r*_1overalpha)*_1overalpha;
+#endif
     else if (r <= _Rv and r > _Rcore)
         return - _k0*( j1( _k0*r) + _C* y1(_k0*r) ); 
     else{
@@ -360,7 +368,11 @@ double PureGas_HS::twobody_scatt_sol_prime(double r) const
 double PureGas_HS::twobody_scatt_sol_dprime(double r) const 
 {
     if(r > _Rv)
-        return - _Gamma*exp(-r/ _alpha)/ (_alpha*_alpha);
+#ifndef fastExp
+        return - _Gamma*exp(-r*_1overalpha)*_1overalpha*_1overalpha ;
+#else    
+        return - _Gamma*fastExp(-r*_1overalpha)*_1overalpha*_1overalpha ;
+#endif
     else if (r <= _Rv and r > _Rcore)
         return -_k0*_k0/2. * 
                (

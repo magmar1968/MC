@@ -25,6 +25,7 @@ public:
     PureGas(size_t Natoms,double h_len, double D)
         :_Natoms(Natoms),_h_len(h_len),_D(D)
     {
+        _1over_h_len = 1./_h_len;
         //initialize random device
         std::random_device dev;
         _RNG = std::mt19937(dev());
@@ -67,6 +68,7 @@ protected:
 
     uint  _Natoms   = 0;  //Atoms Number
     double _h_len   = 0;
+    double _1over_h_len; // 1/_hlen
     double _D       = 0;      //Energy scale
 
     std::mt19937 _RNG;

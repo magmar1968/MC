@@ -1,6 +1,7 @@
 #ifndef __PUREGAS_HS_HPP__
 #define __PUREGAS_HS_HPP__
 #include "../puregas.hpp"
+#include "../../utility/fast_exp/fast_exp.hpp"
 #include <fstream> //fstream
 #include <iomanip> //setprecision
 
@@ -60,12 +61,12 @@ protected:
 private:
     double _k0;     //
     double _alpha;  //
+    double _1overalpha; //
     double _Rv;     // 
     double _Rcore;  //
     double _Gamma;  //
     double _C;      //
-protected:
-    double _1over_h_len; // 1/_hlen
+
 };
 
 }
