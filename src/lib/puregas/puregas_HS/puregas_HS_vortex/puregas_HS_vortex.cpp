@@ -111,9 +111,12 @@ double PureGas_HS_Vortex::EkinPartial(cpos_vec_type& R) const
         r = mod(pos);
 
         //reduce comp computing exp less times
-        double k = _1overa/vortex_sol(r);
-
-        ekinpartial += -_D*k*(1./r - k);
+#ifndef fastExp
+        double k =  exp(r*_1overa);
+#else
+        double k = fastExp(r*_1overa);
+#endif
+        ekinpartial += -_D*(-_1overa*_1overa) * k/((k-1)*(k-1));
     }
     
     return PureGas_HS::EkinPartial(R) + ekinpartial;
@@ -181,7 +184,11 @@ PureGas::force_vec_type PureGas_HS_Vortex::F(cpos_vec_type& R) const
         //harmonic potential
         up = -r*_1over_h_len*_1over_h_len;
         //vortex
-        up += 1./(_a_vortex * vortex_sol(r));
+#ifndef fastExp
+        up += _1overa * 1./(exp(r*_1overa) - 1.);
+#else
+        up += _1overa * 1./(fastExp(r*_1overa) - 1.);
+#endif 
         Force[k_atom] += up*r_hat;
     }
 
@@ -191,7 +198,12 @@ PureGas::force_vec_type PureGas_HS_Vortex::F(cpos_vec_type& R) const
 
 double PureGas_HS_Vortex::vortex_sol(double r) const
 {
-    return 1 - exp(-r/_a_vortex);
+#ifndef fastExp
+    return 1 - exp(-r*_1overa);
+#else 
+    return 1 - fastExp(-r*_1overa);
+#endif
+
 }
 
 
