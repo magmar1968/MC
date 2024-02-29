@@ -336,7 +336,7 @@ void PureGas_HS::print_conf_tofile(const std::string& filename,
 double PureGas_HS::twobody_scatt_sol(double r) const
 {
     if(r > _Rv)
-#ifndef fastExp
+#ifndef FASTEXP
         return 1 - _Gamma*exp( -r* _1overalpha);
 #else 
         return 1 - _Gamma*fastExp( -r* _1overalpha);
@@ -352,7 +352,7 @@ double PureGas_HS::twobody_scatt_sol(double r) const
 double PureGas_HS::twobody_scatt_sol_prime(double r) const
 {
    if(r > _Rv)
-#ifndef fastExp
+#ifndef FASTEXP
         return _Gamma*exp( -r*_1overalpha)*_1overalpha;
 #else
         return _Gamma*fastExp( -r*_1overalpha)*_1overalpha;
@@ -368,7 +368,7 @@ double PureGas_HS::twobody_scatt_sol_prime(double r) const
 double PureGas_HS::twobody_scatt_sol_dprime(double r) const 
 {
     if(r > _Rv)
-#ifndef fastExp
+#ifndef FASTEXP
         return - _Gamma*exp(-r*_1overalpha)*_1overalpha*_1overalpha ;
 #else    
         return - _Gamma*fastExp(-r*_1overalpha)*_1overalpha*_1overalpha ;

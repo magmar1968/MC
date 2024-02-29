@@ -38,8 +38,8 @@ main: CCFLAGS += -O3
 main: $(TARGET)
 
 .PHONY: fast
-fast: LDFLAGS += -DfastExp
-fast: CCFLAGS += -DfastExp
+fast: LDFLAGS += -DFASTEXP
+fast: CCFLAGS += -DFASTEXP
 fast: main
 
 

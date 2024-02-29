@@ -111,7 +111,7 @@ double PureGas_HS_Vortex::EkinPartial(cpos_vec_type& R) const
         r = mod(pos);
 
         //reduce comp computing exp less times
-#ifndef fastExp
+#ifndef FASTEXP
         double k =  exp(r*_1overa);
 #else
         double k = fastExp(r*_1overa);
@@ -184,7 +184,7 @@ PureGas::force_vec_type PureGas_HS_Vortex::F(cpos_vec_type& R) const
         //harmonic potential
         up = -r*_1over_h_len*_1over_h_len;
         //vortex
-#ifndef fastExp
+#ifndef FASTEXP
         up += _1overa * 1./(exp(r*_1overa) - 1.);
 #else
         up += _1overa * 1./(fastExp(r*_1overa) - 1.);
@@ -198,7 +198,7 @@ PureGas::force_vec_type PureGas_HS_Vortex::F(cpos_vec_type& R) const
 
 double PureGas_HS_Vortex::vortex_sol(double r) const
 {
-#ifndef fastExp
+#ifndef FASTEXP
     return 1 - exp(-r*_1overa);
 #else 
     return 1 - fastExp(-r*_1overa);
