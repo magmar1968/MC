@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "../utility/2D_vector.hpp" //vector 2D
+
 namespace mcs
 {
 
@@ -35,6 +37,8 @@ public:
     virtual double Get_NEW_TWF() = 0;
     virtual double Get_OLD_TWF() = 0;
 
+    virtual std::vector<vector_2D> Get_R(uint whichGas = 1) const = 0;
+    
     double Get_NEW_EL()const{return NEW_EL;};
     double Get_OLD_EL()const{return OLD_EL;};
 

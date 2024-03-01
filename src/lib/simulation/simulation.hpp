@@ -46,6 +46,9 @@ public:
 
     MC_output Run();
 
+    std::vector<vector_2D> GetR1() const;
+    std::vector<vector_2D> GetR2() const;
+
 private:
 
     void SetupSimulation();

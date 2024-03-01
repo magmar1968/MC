@@ -49,6 +49,30 @@ MC_output Simulation::Run()
 }
 
 
+//getters
+std::vector<vector_2D> Simulation::GetR1() const 
+{
+
+    if(is_flag_on(_McOpt,McOptions::VMC)){
+        return _System -> Get_R(1);
+    }else{
+        throw std::logic_error("ERROR: this Option is available only for VMC\n");
+    }
+}
+
+std::vector<vector_2D> Simulation::GetR2() const
+{
+    if(is_flag_on(_McOpt,McOptions::VMC)){
+        if(is_flag_on(_McOpt,McOptions::GasMixture)){
+            return _System -> Get_R(2);
+        }else{
+            throw std::logic_error("ERROR: this Option is available only for GasMixtures\n");
+        }
+    }else{
+        throw std::logic_error("ERROR: this Option is available only for VMC\n");
+    }
+}
+
 
 void Simulation::SetupGas1()
 {
@@ -107,8 +131,9 @@ void Simulation::SetupPureGas()
     if(is_flag_on(_McOpt,McOptions::ReadInitConfFromFile)){
         std::string filename;
         filename = _McParam["InitialConfFilename_1"];
+        size_t Natoms1 = checkAndGeti(_McParam,"NatomsGas1");
         _System = new System_PureGas(_Gas1,_DensProfileGas1,
-                                     read_R(filename));
+                                     read_R(filename,Natoms1));
     }else{
         std::vector<vector_2D> R = _Gas1->gen_initial_conf();
         _System = new System_PureGas(_Gas1,_DensProfileGas1,R);

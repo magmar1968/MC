@@ -33,6 +33,8 @@ public:
     void print_conf_tofile(const std::string& filename);
     void print_dens_profile_tofile(const std::string& filename);
 
+    std::vector<vector_2D> Get_R(uint WhichGas) const {return _R;};
+
     double Get_NEW_TWF();
     double Get_OLD_TWF();
 

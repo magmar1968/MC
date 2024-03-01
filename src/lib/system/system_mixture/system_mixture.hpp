@@ -6,6 +6,8 @@
 #include "../../utility/2D_vector.hpp" //vector 2D
 #include "../../density_profile/density_profile.hpp" //density profile
 
+#include <stdexcept> //std::invalid_argument
+
 
 namespace mcs{
 
@@ -39,12 +41,19 @@ public:
     double Get_NEW_TWF();
     double Get_OLD_TWF();
 
+    std::vector<vector_2D> Get_R(uint WhichGas) const; 
+
+
     Energies Get_Energies() const;
 
     System* copy() const
     {
         return new System_Mixture(*this);
     };
+
+private:
+    std::vector<vector_2D> GetR1() const {return _R1;}
+    std::vector<vector_2D> GetR2() const {return _R2;}
 
 private:
     Mixture_HS * _Mixture;

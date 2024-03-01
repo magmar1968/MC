@@ -176,6 +176,20 @@ Energies System_Mixture::Get_Energies() const
 
 
 //###############################################
+//#        Getter Configuration                 #
+//###############################################
+std::vector<vector_2D> System_Mixture::Get_R(uint WhichGas) const 
+{   
+    if(WhichGas == 1 or WhichGas == 2)
+        throw std::invalid_argument( "ERROR: in System_Mixture::Get_R input must be either 1 or 2\n");
+
+    if(WhichGas == 1)
+        return GetR1();
+    else
+        return GetR2();
+}
+
+//###############################################
 //#            Printing Functions               #
 //###############################################
 
