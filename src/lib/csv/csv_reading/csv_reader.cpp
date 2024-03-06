@@ -1,5 +1,8 @@
 #include "csv_reader.hpp"
 
+namespace csv{
+
+
 std::vector<std::string> readCSVRow(const std::string &row) {
     CSVState state = CSVState::UnquotedField;
     std::vector<std::string> fields {""};
@@ -55,4 +58,5 @@ std::vector<std::vector<std::string>> readCSV(std::istream &in) {
         table.push_back(fields);
     }
     return table;
+}
 }
