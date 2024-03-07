@@ -17,8 +17,8 @@ HEADEXT     := hpp
 DEPEXT      := d
 OBJEXT      := o
 #Flags, Libraries and Includes
-LDFLAGS  = -std=c++11 -fopenmp
-CCFLAGS := -std=c++11 -fopenmp
+LDFLAGS  = -std=c++11 
+CCFLAGS := -std=c++11 
 INC         := -I$(INCDIR) -I/usr/local/include
 INCDEP      := -I$(INCDIR)
 
@@ -38,8 +38,8 @@ main: CCFLAGS += -O3
 main: $(TARGET)
 
 .PHONY: fast
-fast: LDFLAGS += -DFASTEXP
-fast: CCFLAGS += -DFASTEXP
+fast: LDFLAGS += -fopenmp -DFASTEXP
+fast: CCFLAGS += -fopenmp -DFASTEXP
 fast: main
 
 
@@ -79,7 +79,6 @@ clean:
 #Full Clean, Objects and Binaries
 .PHONY: cleaner
 cleaner: clean
-	@$(RM) -r results
 	@$(RM) -r $(TARGETDIR)
 
 
