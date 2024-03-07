@@ -13,6 +13,9 @@ System_PureGas::System_PureGas(PureGas * Gas,
     VMC_step_made = false;
     DMC_step_made = false;
 
+    if(! _Gas->is_configuration_physical(_R)){
+        throw std::invalid_argument("Error: the initial configuration is not physical\n");
+    }
     OLD_EL = _Gas->Elocal(_R);
 
 }

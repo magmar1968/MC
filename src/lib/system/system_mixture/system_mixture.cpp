@@ -14,6 +14,9 @@ System_Mixture::System_Mixture(Mixture_HS * Mixture, DensProfile*DP1, DensProfil
     VMC_step_made = false;
     DMC_step_made = true;
 
+    if( ! _Mixture->is_configuration_physical(_R1,_R2) ){
+        throw std::invalid_argument("Error: the initial configuration is not physical\n");
+    }
     OLD_EL = _Mixture->Elocal(_R1,_R2);
 }
 
