@@ -132,7 +132,6 @@ void DensProfile::normalize()
     {
         val = _density_profile[i];
         val /= double(_Nupdated);  
-        val /= double(_Natoms);  
         rmin = i*_DeltaR;
         rmax = (i+1)*_DeltaR;
         area = M_PI * (rmax*rmax - rmin*rmin);
