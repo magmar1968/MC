@@ -106,15 +106,23 @@ double Mixture_HS::Ekin(cpos_vec_type& R1, cpos_vec_type& R2) const
     assert(R1.size() == _Natoms_Gas1);
     assert(R2.size() == _Natoms_Gas2);
 #endif 
-    double ekin = 0.;
+    
+    return EkinPartial(R1,R2) - EkinFor(R1,R2);
+}
+
+
+//================Ekin Partial=================//
+double Mixture_HS::EkinPartial(cpos_vec_type& R1, cpos_vec_type& R2) const
+{
+    double ekinpart = 0;
     double r    = 0.;
     double r1m,up,us;
     double D1 = _Gas1->Get_D();
     double D2 = _Gas2->Get_D();
 
     //add EkinPartial
-    ekin += _Gas1->EkinPartial(R1);
-    ekin += _Gas2->EkinPartial(R2);
+    ekinpart += _Gas1->EkinPartial(R1);
+    ekinpart += _Gas2->EkinPartial(R2);
 
     //interaction between gasses
     for(uint i_atom = 0; i_atom < R1.size(); ++i_atom){
@@ -125,13 +133,11 @@ double Mixture_HS::Ekin(cpos_vec_type& R1, cpos_vec_type& R2) const
             us = twobody_scatt_sol_dprime(r)/twobody_scatt_sol(r);
 
             //the interaction is symmetric except for D1,D2
-            ekin += -D1*( us + up*r1m - up*up);
-            ekin += -D2*( us + up*r1m - up*up);
+            ekinpart += -D1*( us + up*r1m - up*up);
+            ekinpart += -D2*( us + up*r1m - up*up);
         }
     }
-    //force terms
-    ekin -= EkinFor(R1,R2);
-    return ekin;
+    return ekinpart;
 }
 
 

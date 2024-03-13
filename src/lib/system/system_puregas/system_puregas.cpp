@@ -16,7 +16,12 @@ System_PureGas::System_PureGas(PureGas * Gas,
     if(! _Gas->is_configuration_physical(_R)){
         throw std::invalid_argument("Error: the initial configuration is not physical\n");
     }
-    OLD_EL = _Gas->Elocal(_R);
+    
+    double E_part  = _Gas->EkinPartial(_R);
+    _E_OLD.EkinFor = _Gas->EkinFor(_R);
+    _E_OLD.Ekin    = E_part - _E_OLD.EkinFor;
+    _E_OLD.Epot    = _Gas->Epot(_R);
+    _E_OLD.Elocal  = _E_OLD.Ekin + _E_OLD.Epot; 
 
 }
 
@@ -29,8 +34,8 @@ System_PureGas::System_PureGas(const System_PureGas& S)
     VMC_step_made = S.VMC_step_made;
     DMC_step_made = S.DMC_step_made;
 
-    NEW_EL = S.NEW_EL;
-    OLD_EL = S.OLD_EL;
+    _E_NEW = S._E_NEW;
+    _E_OLD = S._E_OLD;
 }
 
 //###############################################
@@ -67,6 +72,7 @@ bool System_PureGas::try_DMC_step(double dt)
     double D = _Gas->Get_D();
     double sigma = sqrt(2*D*dt);
     size_t size = _R.size();
+    double E_part;
     
     //diffuse
     pos_vec_type R_DIFFUSED(size);
@@ -84,7 +90,13 @@ bool System_PureGas::try_DMC_step(double dt)
     R1 = R_DIFFUSED + D*dt*F1/2.;
     R2 = R_DIFFUSED + D*dt*(F1 + _Gas->F(R1))/4.;
 
-    NEW_EL = _Gas->Elocal(R2);
+    E_part         = _Gas->EkinPartial(R2);
+    _E_NEW.EkinFor = _Gas->EkinFor(R2);
+    _E_NEW.Ekin    = E_part - _E_NEW.EkinFor;
+    _E_NEW.Epot    = _Gas->Epot(R2);
+    _E_NEW.Elocal  = _E_NEW.Ekin + _E_NEW.Epot; 
+    
+
     _R_TMP = R_DIFFUSED + D*dt*_Gas->F(R2)/2.;
 
     DMC_step_made = true;
@@ -101,7 +113,7 @@ void System_PureGas::accept_DMC_step()
     //The temporary configuration is now the current one
     _R.swap(_R_TMP);
     DMC_step_made = false;
-    OLD_EL = NEW_EL;
+    _E_OLD = _E_NEW;
 }
 
 void System_PureGas::update_DensProfile()
@@ -131,12 +143,7 @@ double System_PureGas::Get_OLD_TWF()
 
 Energies System_PureGas::Get_Energies() const
 {
-    Energies Energies;
-    Energies.Ekin = _Gas->Ekin(_R);
-    Energies.EkinFor = _Gas->EkinFor(_R);
-    Energies.Epot = _Gas->Epot(_R);
-    Energies.Elocal = Energies.Epot + Energies.Ekin;
-    return Energies;
+    return _E_OLD;
 }
 
 //###############################################
@@ -153,8 +160,6 @@ void System_PureGas::print_dens_profile_tofile(const std::string& filename)
 {
     _DensProfile->print_norm_density_profile(filename);
 }
-
-
 
 } // namespace mcs
 

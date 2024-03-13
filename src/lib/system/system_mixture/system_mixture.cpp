@@ -17,7 +17,11 @@ System_Mixture::System_Mixture(Mixture_HS * Mixture, DensProfile*DP1, DensProfil
     if( ! _Mixture->is_configuration_physical(_R1,_R2) ){
         throw std::invalid_argument("Error: the initial configuration is not physical\n");
     }
-    OLD_EL = _Mixture->Elocal(_R1,_R2);
+    double E_part  = _Mixture->EkinPartial(_R1,_R2);
+    _E_OLD.EkinFor = _Mixture->EkinFor(_R1,_R2);
+    _E_OLD.Ekin    = E_part - _E_OLD.EkinFor;
+    _E_OLD.Epot    = _Mixture->Epot(_R1,_R2);
+    _E_OLD.Elocal  = _E_OLD.Ekin + _E_OLD.Epot; 
 }
 
 System_Mixture::System_Mixture(const System_Mixture& S)
@@ -33,8 +37,8 @@ System_Mixture::System_Mixture(const System_Mixture& S)
     VMC_step_made = S.VMC_step_made;
     DMC_step_made = S.DMC_step_made;
 
-    NEW_EL = S.NEW_EL;
-    OLD_EL = S.OLD_EL;
+    _E_NEW = S._E_NEW;
+    _E_OLD = S._E_OLD;   
 }
 
 
@@ -113,7 +117,11 @@ bool System_Mixture::try_DMC_step(double dt)
     R2_1 = R2_DIFFUSED + D2*dt*F2_1/2.;
     R2_2 = R2_DIFFUSED + D2*dt*(F2_1 + _Mixture->F2(_R1,R2_1))/4.;
 
-    NEW_EL = _Mixture->Elocal(R1_2,R2_2);
+    double E_part         = _Mixture->EkinPartial(R2_1,R2_2);
+    _E_NEW.EkinFor = _Mixture->EkinFor(R2_1,R2_2);
+    _E_NEW.Ekin    = E_part - _E_NEW.EkinFor;
+    _E_NEW.Epot    = _Mixture->Epot(R2_1,R2_2);
+    _E_NEW.Elocal  = _E_NEW.Ekin + _E_NEW.Epot;
 
     _R1_TMP = R1_DIFFUSED + D1*dt*_Mixture->F1(R1_2,_R2)/2.;
     _R2_TMP = R2_DIFFUSED + D2*dt*_Mixture->F2(_R1,R2_2)/2.;
@@ -135,7 +143,7 @@ void System_Mixture::accept_DMC_step()
     _R2.swap(_R2_TMP);
 
     DMC_step_made = false;
-    OLD_EL = NEW_EL;
+    _E_OLD = _E_NEW;
 
 }
 
@@ -169,12 +177,7 @@ double System_Mixture::Get_OLD_TWF()
 
 Energies System_Mixture::Get_Energies() const
 {
-    Energies Energies;
-    Energies.Ekin = _Mixture->Ekin(_R1,_R2);
-    Energies.EkinFor = _Mixture->EkinFor(_R1,_R2);
-    Energies.Epot = _Mixture->Epot(_R1,_R2);
-    Energies.Elocal = Energies.Epot + Energies.Ekin;
-    return Energies;
+    return _E_OLD;
 }
 
 

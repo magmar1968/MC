@@ -38,6 +38,7 @@ void DMC::run()
     double E_acc;
     double  E_NEW,E_OLD;
     Energies energies;
+    Energies Energies_acc;
     uint N_sons;
 
     
@@ -45,10 +46,11 @@ void DMC::run()
     for(int MC_step = - _N_stabsteps; MC_step < _N_MCsteps;++MC_step)
     {
         timer.Tick(); //start timer
-
+        Energies_acc = 0.; //set accumulators to 0
         for(int step = 0; step < _N_thermsteps; ++step)
         {
             E_acc = 0.;
+            
             std::vector<System*> Walkers_TMP;
             for(auto &walker: _Walkers)
             {
@@ -82,34 +84,30 @@ void DMC::run()
                     }
                     continue;
                 }
-
-            }//walkers
+    
+            }// end walkers loop
             
-            //swap vectors
+
             _Walkers.swap(Walkers_TMP);
-            //new walker number
             _NWalkers = _Walkers.size();
 
             E_shift = E_acc/double(_NWalkers) 
                       - 0.1/_dt * log( double(_NWalkers)/_N0Walkers);
-        }//therm step
-        timer.Tock();//stop timer
+            
+            //update energies accumulator
+            for(auto& walker : _Walkers){
+                Energies_acc += walker->Get_Energies()/double(_NWalkers*_N_thermsteps);
+            }
+        }//end therm loop
 
-        Energies energies_acc;
+        timer.Tock();//stop timer
         if(MC_step > 0){
 
             for(auto &walker : _Walkers){
                 walker->update_DensProfile();
-                energies = walker->Get_Energies();
-                
-                energies_acc.Elocal += energies.Elocal/double(_NWalkers);
-                energies_acc.Epot   += energies.Epot/double(_NWalkers);
-                energies_acc.Ekin   += energies.Ekin/double(_NWalkers);
-                energies_acc.EkinFor+= energies.EkinFor/double(_NWalkers);
-
             }
 
-            E = energies_acc.Elocal;
+            E = Energies_acc.Elocal;
             _Eavg  = _Eavg *double(MC_step - 1)/double(MC_step) 
                        + E /double(MC_step);
             _E2avg = _E2avg*double(MC_step - 1)/double(MC_step) 
@@ -119,7 +117,7 @@ void DMC::run()
 
             _Eavg_array.push_back(_Eavg);
             _Error_array.push_back(_Error);
-            _energy_evolution.push_back(energies_acc);
+            _energy_evolution.push_back(Energies_acc);
             
             //print stuff
             Time time = timer.Get_Time();

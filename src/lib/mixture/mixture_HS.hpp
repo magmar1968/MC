@@ -38,6 +38,7 @@ public:
 
     //energies
     double Elocal(cpos_vec_type&,cpos_vec_type&   ) const ;
+    double EkinPartial(cpos_vec_type&,cpos_vec_type&) const;
     double Ekin(cpos_vec_type&,cpos_vec_type&     ) const ;
     double EkinFor(cpos_vec_type&,cpos_vec_type&  ) const ;
     double Epot(cpos_vec_type&,cpos_vec_type&     ) const ;

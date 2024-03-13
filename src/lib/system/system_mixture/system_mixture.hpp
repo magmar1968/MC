@@ -67,8 +67,6 @@ private:
     std::vector<vector_2D> _R2_TMP;
 
     
-    
-
 };
 
 }
