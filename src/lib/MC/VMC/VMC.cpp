@@ -30,11 +30,13 @@ void VMC::run()
     double c1;
     double E = 0;
     Energies energies;
+    Energies Energies_acc;
 
     energies = _Walker->Get_Energies();
 
     for(int MC_step = - _N_stabsteps; MC_step <= _N_MCsteps;++MC_step)
     {
+        Energies_acc = 0.;
         for(int step = 0; step < _N_thermsteps; ++step)
         {
             ++ COUNTER;
@@ -57,12 +59,13 @@ void VMC::run()
                         ++ N_accepted_moves;
                     }
                 }
+                Energies_acc += _Walker->Get_Energies()/double(_N_thermsteps);
             }
         }
         if(MC_step > 0){
             //update accumulators
-            energies = _Walker ->Get_Energies();
-            E = energies.Elocal;
+            
+            E = Energies_acc.Elocal;
             _Eavg  = _Eavg *double(MC_step - 1)/double(MC_step) + E  /double(MC_step);
             _E2avg = _E2avg*double(MC_step - 1)/double(MC_step) + E*E/double(MC_step);
             _Error  = sqrt( _E2avg - _Eavg*_Eavg);
