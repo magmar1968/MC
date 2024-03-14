@@ -3,19 +3,20 @@ FILTER_IN  = $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
 #Compiler and Linker
 CC          := g++
 
-#The Target Binary Program
-TARGET      := $(basename $(notdir $(wildcard ./src/main/*.cpp )))
-TEST        := $(basename $(notdir $(wildcard ./src/tests/*.cpp)))
-#TEST        := $(basename $(notdir $(wildcard ./src/tests/test_regen_path.cu)))
 #The Directories, Source, Includes, Objects, Binary and Resources
 SRCDIR      := src
 INCDIR      := inc
 BUILDDIR    := obj
 TARGETDIR   := bin
+MAINDIR     := src/main
 SRCEXT      := cpp
 HEADEXT     := hpp
-DEPEXT      := d
 OBJEXT      := o
+
+#The Target Binary Program
+TARGET      := $(basename $(notdir $(shell find $(MAINDIR) -type f -name *.$(SRCEXT))))
+TEST        := $(basename $(notdir $(wildcard ./src/tests/*.cpp)))
+#TEST        := $(basename $(notdir $(wildcard ./src/tests/test_regen_path.cu)))
 #Flags, Libraries and Includes
 LDFLAGS  = -std=c++11 
 CCFLAGS := -std=c++11 
@@ -41,6 +42,11 @@ main: $(TARGET)
 fast: LDFLAGS += -fopenmp -DFASTEXP
 fast: CCFLAGS += -fopenmp -DFASTEXP
 fast: main
+
+.PHONY: parallel
+parallel: LDFLAGS += -fopenmp
+parallel: CCFLAGS += -fopenmp
+parallel:  
 
 
 .PHONY: test
@@ -75,6 +81,7 @@ directories:
 #Clean only Objecst
 clean:
 	@$(RM) -r $(BUILDDIR)
+	@$(RM) -r $(TARGETDIR)
 
 #Full Clean, Objects and Binaries
 .PHONY: cleaner
