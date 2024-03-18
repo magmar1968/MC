@@ -16,7 +16,7 @@ enum class CSVState {
 
 std::vector<std::string> readCSVRow(const std::string &row);
 /// Read CSV file, Excel dialect. Accept "quoted fields ""with quotes"""
-std::vector<std::vector<std::string>> readCSV(std::istream &in);
+std::vector<std::vector<std::string>> readCSV(std::istream &in,bool popHeader = false);
 
 }
 #endif 

@@ -46,7 +46,7 @@ std::vector<std::string> readCSVRow(const std::string &row) {
 }
 
 /// Read CSV file, Excel dialect. Accept "quoted fields ""with quotes"""
-std::vector<std::vector<std::string>> readCSV(std::istream &in) {
+std::vector<std::vector<std::string>> readCSV(std::istream &in,bool popHeader) {
     std::vector<std::vector<std::string>> table;
     std::string row;
     while (!in.eof()) {
@@ -56,6 +56,10 @@ std::vector<std::vector<std::string>> readCSV(std::istream &in) {
         }
         auto fields = readCSVRow(row);
         table.push_back(fields);
+    }
+    if(popHeader){
+        //delete first entry
+        table.erase(table.begin());
     }
     return table;
 }
