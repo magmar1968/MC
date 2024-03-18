@@ -46,7 +46,7 @@ std::string getRawName(const std::string& path )
 
     if(last_index == std::string::npos){
         std::cerr << "ERROR: in " << __PRETTY_FUNCTION__ << std::endl
-                 <<  "       seems like the input path doesn't lead to a valid file\n";
+                 <<  "       seems like the input path is empty\n";
         return std::string();
     }
     else
@@ -58,7 +58,7 @@ std::string getExtension(const std::string& path)
     size_t last_index = path.find_last_of(".");
     if(last_index == std::string::npos){
         std::cerr << "ERROR: in " << __PRETTY_FUNCTION__ << std::endl
-                 <<  "       seems like the input path doesn't lead to a valid file\n";
+                 <<  "       seems like the input path is empty\n";
         return std::string();
     }
     else

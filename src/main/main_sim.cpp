@@ -6,7 +6,7 @@
 int main()
 {
 
-    std::string input_filename = "./results/vmcVSdmc/VMCPG_inputfile.dat";
+    std::string input_filename = "./inputfile/DMCPG_inputfile.dat";
     std::map<std::string,std::string> MC_param;
     McOptions MC_opt = McOptions::Initial;
     read_file(input_filename,MC_param,MC_opt); 

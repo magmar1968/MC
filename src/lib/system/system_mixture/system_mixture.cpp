@@ -88,8 +88,6 @@ bool System_Mixture::try_DMC_step(double dt)
     double sigma1 = sqrt(2*D1*dt);
     double sigma2 = sqrt(2*D2*dt);
     
-    _R1_TMP = _Mixture->diffuse_gas1(_R1,sigma1);
-    _R2_TMP = _Mixture->diffuse_gas2(_R2,sigma2); 
 
     size_t size1 = _R1.size();
     size_t size2 = _R2.size();
@@ -117,10 +115,10 @@ bool System_Mixture::try_DMC_step(double dt)
     R2_1 = R2_DIFFUSED + D2*dt*F2_1/2.;
     R2_2 = R2_DIFFUSED + D2*dt*(F2_1 + _Mixture->F2(_R1,R2_1))/4.;
 
-    double E_part         = _Mixture->EkinPartial(R2_1,R2_2);
-    _E_NEW.EkinFor = _Mixture->EkinFor(R2_1,R2_2);
+    double E_part         = _Mixture->EkinPartial(R1_2,R2_2);
+    _E_NEW.EkinFor = _Mixture->EkinFor(R1_2,R2_2);
     _E_NEW.Ekin    = E_part - _E_NEW.EkinFor;
-    _E_NEW.Epot    = _Mixture->Epot(R2_1,R2_2);
+    _E_NEW.Epot    = _Mixture->Epot(R1_2,R2_2);
     _E_NEW.Elocal  = _E_NEW.Ekin + _E_NEW.Epot;
 
     _R1_TMP = R1_DIFFUSED + D1*dt*_Mixture->F1(R1_2,_R2)/2.;
