@@ -38,15 +38,16 @@ main: LDFLAGS += -O3
 main: CCFLAGS += -O3
 main: $(TARGET)
 
-.PHONY: fast
-fast: LDFLAGS += -fopenmp -DFASTEXP
-fast: CCFLAGS += -fopenmp -DFASTEXP
-fast: main
-
 .PHONY: parallel
 parallel: LDFLAGS += -fopenmp
 parallel: CCFLAGS += -fopenmp
-parallel:  
+parallel: fast
+
+
+.PHONY: fast
+fast: LDFLAGS += -DFASTEXP
+fast: CCFLAGS += -DFASTEXP
+fast: main
 
 
 .PHONY: test
@@ -57,6 +58,7 @@ test: $(TEST)
 
 .PHONY: debug
 debug: clean
+debug: resources
 debug: LDFLAGS += -g -W -Wall -ggdb3 -DDEBUG
 debug: CCFLAGS += -g -W -Wall -ggdb3 -DDEBUG 
 debug: $(TARGET)
