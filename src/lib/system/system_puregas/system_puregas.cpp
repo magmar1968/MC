@@ -122,6 +122,12 @@ void System_PureGas::update_DensProfile()
     _DensProfile->update(_R);
 }
 
+void System_PureGas::store_DensProfile()
+{
+    //store block density profile
+    _DensProfile->store_result();
+}
+
 //###############################################
 //#                 Getter TWF                  #
 //###############################################

@@ -29,6 +29,7 @@ public:
     void accept_DMC_step();
 
     void update_DensProfile();
+    void store_DensProfile();
 
     void print_conf_tofile(const std::string& filename);
     void print_dens_profile_tofile(const std::string& filename);

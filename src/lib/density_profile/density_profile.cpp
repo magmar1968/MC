@@ -15,6 +15,7 @@ DensProfile::DensProfile(cuint Natoms, cdouble DeltaR)
 /// @param Natoms Atoms number
 /// @param Nsteps Number of initial step for the density progile
 /// @param DeltaR spatial step size
+/// @param ComputeVar if true compute also the variance of the density profile
 DensProfile::DensProfile(cuint Natoms, cuint N0steps, cdouble DeltaR)
     :_Natoms(Natoms),_Nsteps(N0steps),_DeltaR(DeltaR)
 {
@@ -79,36 +80,51 @@ void DensProfile::update(std::vector<vector_2D>::const_iterator R_begin,
 
 
 
-
 void DensProfile::print_norm_density_profile(const std::string& filename)
 {
     std::fstream  ofs(filename,std::fstream::out);
     double rmin,rmax;
+    double val;
+
+    uint MaxNSteps = _Nsteps;
+    uint NSamples = _norm_density_profiles.size();
+    std::vector<double> DensProfile(MaxNSteps),DensProfileSquared(MaxNSteps);
 
     if(ofs.bad()){
         std::cerr << "ERROR: unable to print density profile" << std::endl;
         return;
     }
 
-    normalize();
 
-    //else
-    ofs << "rmin,rmax,dens" << std::endl;
-    for(uint i_step = 0; i_step < _Nsteps; ++i_step)
-    {
-        rmin = i_step*_DeltaR;
-        rmax = (i_step+1)*_DeltaR; 
-        ofs << std::setprecision(15) 
-            <<  rmin<<"," 
-            << rmax <<","
-            << _norm_density_profile[i_step] << std::endl;
-
+    // resize all the arrays with the latest array size which
+    // by construction is also the biggest all the blanc spots 
+    // are filled with zeros
+    for(auto& array : _norm_density_profiles){
+        array.resize(MaxNSteps); 
+        for(uint i = 0; i < MaxNSteps; ++i){
+            val = array[i];
+            DensProfile[i]        += val/double(NSamples);
+            DensProfileSquared[i] += val*val/double(NSamples);
+        }
     }
-    
+
+    //printing
+
+    ofs << "rmin,rmax,dens,error" << std::endl;
+    for(size_t i = 0; i < MaxNSteps; ++i){
+        rmin = i*_DeltaR;
+        rmax = (i+1)*_DeltaR;
+        ofs << std::setprecision(15)
+            << rmin << ","
+            << rmax << ","
+            << DensProfile[i] << ","
+            << DensProfile[i]*DensProfile[i] - DensProfileSquared[i] << std::endl;
+    }
+
 }
 
 
-void DensProfile::normalize()
+std::vector<double> DensProfile::GetDensProfileNormalized()
 {
 #ifdef DEBUG
     uint sum_vec = 0;
@@ -120,11 +136,8 @@ void DensProfile::normalize()
     assert(sum_vec == (_Natoms*_Nupdated));
 #endif
 
-
     //init _norm_density_profile
-    _norm_density_profile.resize(_Nsteps);
-    std::fill(_norm_density_profile.begin(),
-              _norm_density_profile.end(),0.);
+    std::vector<double> norm_density_profile(_Nsteps);
 
     double rmin,rmax,area;
     double val;
@@ -136,12 +149,21 @@ void DensProfile::normalize()
         rmax = (i+1)*_DeltaR;
         area = M_PI * (rmax*rmax - rmin*rmin);
         //normalize by the are
-        _norm_density_profile[i] = val / area; 
+        norm_density_profile[i] = val / area; 
     }
-
-    
+    return norm_density_profile;  
 }
 
+
+void DensProfile::store_result()
+{
+    _norm_density_profiles.push_back(GetDensProfileNormalized());
+    
+    //reset the temporary density profile
+    std::fill(_density_profile.begin(),_density_profile.end(),0);
+    _Nupdated = 0;
+
+}
 
 
 }

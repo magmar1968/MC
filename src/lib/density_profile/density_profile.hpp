@@ -33,20 +33,24 @@ public:
     void update(const std::vector<vector_2D>& );
     void update(std::vector<vector_2D>::const_iterator, 
                 std::vector<vector_2D>::const_iterator);
+    void store_result();
     void print_norm_density_profile(const std::string& filename = "./data/dens_profile.csv");
 
 private:
-    void normalize();
+    std::vector<double> GetDensProfileNormalized();
 
 private:
     uint   _Natoms;    //Number of atoms in the gas
     uint   _Nupdated;  //Number of time that the dens prof, had been updated
     uint   _Nsteps;    //Number of dens profile steps
+    
     double _MaxR;      //Max radius of the dens profile
     double _DeltaR;    //size of a dens profile step
+    bool   _ComputeVariance = false; //compute variance
+
 
     std::vector<uint> _density_profile;  //the effective density profile
-    std::vector<double> _norm_density_profile; //the normalized density profile
+    std::vector<std::vector<double>> _norm_density_profiles; //the normalized density profile
 };
 
 }

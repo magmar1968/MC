@@ -60,6 +60,9 @@ void VMC::run()
                     }
                 }
                 Energies_acc += _Walker->Get_Energies()/double(_N_thermsteps);
+                if(MC_step > 0)
+                    //update density profile
+                    _Walker->update_DensProfile();
             }
         }
         if(MC_step > 0){
@@ -74,9 +77,7 @@ void VMC::run()
             _Error_array.push_back(_Error);
             _energy_evolution.push_back(energies);
 
-            //update density profile
-            _Walker->update_DensProfile();
-
+            _Walker->store_DensProfile();
         }
     }
 

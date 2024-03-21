@@ -98,14 +98,21 @@ void DMC::run()
             for(auto& walker : _Walkers){
                 Energies_acc += walker->Get_Energies()/double(_NWalkers*_N_thermsteps);
             }
+
+            if(MC_step > 0){
+                for(auto &walker : _Walkers){
+                    walker->update_DensProfile();
+                }
+            }
+
+
         }//end therm loop
 
         timer.Tock();//stop timer
         if(MC_step > 0){
-
-            for(auto &walker : _Walkers){
-                walker->update_DensProfile();
-            }
+            
+            _Walkers[0]->store_DensProfile();
+            
 
             E = Energies_acc.Elocal;
             _Eavg  = _Eavg *double(MC_step - 1)/double(MC_step) 

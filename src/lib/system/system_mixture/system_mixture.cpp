@@ -153,6 +153,13 @@ void System_Mixture::update_DensProfile()
     _DensProfile_Gas2->update(_R2);
 }
 
+void System_Mixture::store_DensProfile()
+{
+    //store density profiles
+    _DensProfile_Gas1->store_result();
+    _DensProfile_Gas2->store_result();
+}
+
 //###############################################
 //#                 Getter TWF                  #
 //###############################################

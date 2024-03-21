@@ -58,6 +58,7 @@ public:
     virtual void accept_DMC_step() = 0;
 
     virtual void update_DensProfile() = 0;
+    virtual void store_DensProfile() = 0;
 
     virtual void print_conf_tofile(const std::string& filename) = 0;
     virtual void print_dens_profile_tofile(const std::string& filename) = 0;
