@@ -99,7 +99,7 @@ bool System_PureGas::try_DMC_step(double dt)
 
     _R_TMP = R_DIFFUSED + D*dt*_Gas->F(R2)/2.;
 
-    DMC_step_made = true;
+    DMC_step_made       = true;
     return true;
 }
 

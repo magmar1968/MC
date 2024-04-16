@@ -115,7 +115,7 @@ bool System_Mixture::try_DMC_step(double dt)
     R2_1 = R2_DIFFUSED + D2*dt*F2_1/2.;
     R2_2 = R2_DIFFUSED + D2*dt*(F2_1 + _Mixture->F2(_R1,R2_1))/4.;
 
-    double E_part         = _Mixture->EkinPartial(R1_2,R2_2);
+    double E_part  = _Mixture->EkinPartial(R1_2,R2_2);
     _E_NEW.EkinFor = _Mixture->EkinFor(R1_2,R2_2);
     _E_NEW.Ekin    = E_part - _E_NEW.EkinFor;
     _E_NEW.Epot    = _Mixture->Epot(R1_2,R2_2);
