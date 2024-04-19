@@ -90,6 +90,14 @@ void DensProfile::print_norm_density_profile(const std::string& filename)
     uint NSamples = _norm_density_profiles.size();
     std::vector<double> DensProfile(MaxNSteps),DensProfileSquared(MaxNSteps);
 
+#ifdef DEBUG
+    for(auto& array : _norm_density_profiles)
+    {
+        assert(array.size() <= MaxNSteps);
+    }
+#endif
+
+
     if(ofs.bad()){
         std::cerr << "ERROR: unable to print density profile" << std::endl;
         return;
@@ -101,7 +109,7 @@ void DensProfile::print_norm_density_profile(const std::string& filename)
     // are filled with zeros
     for(auto& array : _norm_density_profiles){
         array.resize(MaxNSteps); 
-        for(uint i = 0; i < MaxNSteps; ++i){
+        for(uint i = 0; i < array.size(); ++i){
             val = array[i];
             DensProfile[i]        += val/double(NSamples);
             DensProfileSquared[i] += val*val/double(NSamples);
@@ -111,14 +119,17 @@ void DensProfile::print_norm_density_profile(const std::string& filename)
     //printing
 
     ofs << "rmin,rmax,dens,error" << std::endl;
+    double mean, meanSquared;
     for(size_t i = 0; i < MaxNSteps; ++i){
         rmin = i*_DeltaR;
         rmax = (i+1)*_DeltaR;
+        mean = DensProfile[i];
+        meanSquared = DensProfileSquared[i];
         ofs << std::setprecision(15)
             << rmin << ","
             << rmax << ","
-            << DensProfile[i] << ","
-            << DensProfile[i]*DensProfile[i] - DensProfileSquared[i] << std::endl;
+            << mean << ","
+            << meanSquared - mean*mean << std::endl;
     }
 
 }
