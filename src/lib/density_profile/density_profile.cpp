@@ -129,7 +129,7 @@ void DensProfile::print_norm_density_profile(const std::string& filename)
             << rmin << ","
             << rmax << ","
             << mean << ","
-            << meanSquared - mean*mean << std::endl;
+            << sqrt(meanSquared - mean*mean) << std::endl;
     }
 
 }
