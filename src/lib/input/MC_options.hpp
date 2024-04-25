@@ -26,15 +26,29 @@ inline McOptions operator|(McOptions a, McOptions b)
     return static_cast<McOptions>(static_cast<int>(a) | static_cast<int>(b));
 }
 
+inline McOptions& operator |=(McOptions& a, McOptions b)
+{
+    return a= a |b;
+}
 
 inline McOptions operator&(McOptions a, McOptions b)
 {
     return static_cast<McOptions>(static_cast<int>(a) & static_cast<int>(b));
 }
 
-inline McOptions operator^(McOptions a, McOptions b)
+inline McOptions& operator&=(McOptions& a, McOptions b)
+{
+    return a = a & b; 
+}
+
+inline McOptions operator^(McOptions& a, McOptions b)
 {
     return static_cast<McOptions>(static_cast<int>(a) ^ static_cast<int>(b));
+}
+
+inline McOptions& operator^=(McOptions& a, McOptions b)
+{
+    return a = a ^ b;
 }
 
 inline bool is_flag_on(McOptions opt, McOptions  flag)
